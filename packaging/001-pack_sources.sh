@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#
+# Copyright 2022 Ole Richter - University of Groningen
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+echo "#############################"
+echo "# pack all sources"
+if [ -d "../packaging" ]; then echo "please exec from repository root (one folder up)"; exit 1; fi
+touch "actflow_dependency_build_${CIRCLE_SHA1:0:6}_$(date '+%Y-%m-%d')"
+
+#for directory in $EDA_SRC/*; do rm -rf $directory/.git; done
+tar --exclude-vcs \
+-czf actflow_dependencies_sources.tar.gz ./*
+
+# --exclude="$(realpath --relative-to ./ $EDA_SRCDIR/org-boostorg-boost-prebuild)" \

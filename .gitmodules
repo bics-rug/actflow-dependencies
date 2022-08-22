@@ -1,0 +1,84 @@
+[submodule "src/org-kitware-cmake"]
+	path = src/org-kitware-cmake
+	url = ../../Kitware/CMake.git
+	shallow = true
+[submodule "src/org-xianyi-openblas"]
+	path = src/org-xianyi-openblas
+	url = ../../xianyi/OpenBLAS.git
+	shallow = true
+[submodule "src/tamu-drtimothyaldendavis-suitesparse"]
+	path = src/tamu-drtimothyaldendavis-suitesparse
+	url = ../../DrTimothyAldenDavis/SuiteSparse.git
+	shallow = true
+[submodule "src/sandia-trilinos-trilinos"]
+	path = src/sandia-trilinos-trilinos
+	url = ../../trilinos/Trilinos.git
+	shallow = true
+[submodule "src/sandia-xyce-xyce"]
+	path = src/sandia-xyce-xyce
+	url = ../../xyce/xyce.git
+	shallow = true
+[submodule "src/org-madler-zlib"]
+	path = src/org-madler-zlib
+	url = ../../madler/zlib.git
+	shallow = true
+[submodule "src/org-debian-ncurses"]
+	path = src/org-debian-ncurses
+	url = https://salsa.debian.org/debian/ncurses.git
+	shallow = true
+[submodule "src/org-debian-libedit"]
+	path = src/org-debian-libedit
+	url = https://salsa.debian.org/debian/libedit.git
+	shallow = true
+[submodule "src/org-yosyshq-yosys"]
+	path = src/org-yosyshq-yosys
+	url = ../../yosyshq/yosys.git
+	shallow = true
+[submodule "src/yale-rmanohar-abc"]
+	path = src/yale-rmanohar-abc
+	url = ../../rmanohar/abc.git
+	shallow = true
+[submodule "src/org-tcltk-tcl"]
+	path = src/org-tcltk-tcl
+	url = ../../tcltk/tcl.git
+	shallow = true
+[submodule "src/org-tcltk-tk"]
+	path = src/org-tcltk-tk
+	url = ../../tcltk/tk.git
+	shallow = true
+[submodule "src/org-libffi-libffi"]
+	path = src/org-libffi-libffi
+	url = ../../libffi/libffi.git
+	shallow = true
+[submodule "src/org-boostorg-boost"]
+	path = src/org-boostorg-boost
+	url = ../../boostorg/boost.git
+	shallow = true
+[submodule "src/org-numactl-numactl"]
+	path = src/org-numactl-numactl
+	url = ../../numactl/numactl.git
+	shallow = true
+[submodule "src/org-fmtlib-fmt"]
+	path = src/org-fmtlib-fmt
+	url = ../../fmtlib/fmt.git
+	shallow = true
+[submodule "src/org-libeigen-eigen"]
+	path = src/org-libeigen-eigen
+	url = https://gitlab.com/libeigen/eigen.git
+	shallow = true
+[submodule "src/yale-asyncvlsi-magic"]
+	path = src/yale-asyncvlsi-magic
+	url = ../../asyncvlsi/magic.git
+	shallow = true
+[submodule "src/yale-asyncvlsi-irsim"]
+	path = src/yale-asyncvlsi-irsim
+	url = ../../asyncvlsi/irsim.git
+	shallow = true
+[submodule "src/org-gnu-readline"]
+	path = src/org-gnu-readline
+	url = https://git.savannah.gnu.org/git/readline.git
+	shallow = true
+[submodule "src/org-debian-fftw3"]
+	path = src/org-debian-fftw3
+	url = https://salsa.debian.org/science-team/fftw3.git
+	shallow = true
