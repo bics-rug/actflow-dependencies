@@ -1,5 +1,7 @@
 # actflow-dependencies
 build all dependencies required by actflow
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bics-rug/actflow-dependencies/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bics-rug/actflow-dependencies/tree/main)
+
 
 # How to Package and build 
 
@@ -25,9 +27,6 @@ on centos7 just `source packaging/centos7_ci_build_environment.sh` from the repo
 
 `./test` runs the linker tests after the build+install
 
-### relation to the toplevel build/clear/test
-the scripts in packaging actually run the top level sripts for you
-
 ## run the steps for packaging
 
 for running all the packaging steps in order simply execute on the root of the repo
@@ -44,3 +43,5 @@ the scripts in packaging actually run the top level sripts for you
 - `packaging` contains the scripts for CI and packaging
 - `build_scripts` contains all the build scripts for the dependencies
 
+# CI
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/bics-rug/actflow-dependencies/main/build/badge.svg?window=60d)](https://app.circleci.com/insights/github/bics-rug/actflow-dependencies/workflows/build/overview?branch=main&reporting-window=last-60-days&insights-snapshot=true)

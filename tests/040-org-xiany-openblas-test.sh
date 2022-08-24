@@ -14,9 +14,9 @@
 #
 
 if [ -d "../tests" ]; then echo "please exec from repository root (one folder up)"; exit 1; fi
-echo "#############################"
-echo "# fmt test for linking errors"
-
+echo 
+echo "#### openblas test for linking errors ####"
+echo
 source tests/test_helper.sh
 
 lookup_shared_library "libblas.so"

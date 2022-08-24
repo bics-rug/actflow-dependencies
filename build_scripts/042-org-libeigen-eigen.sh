@@ -31,9 +31,9 @@ cmake \
 -D CMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
 -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 -D CMAKE_BUILD_TYPE=Release \
+-D FFTW_LIBRARIES=$ACT_HOME/lib \
 .. || exit 1
 make -j4 || exit 1
 make install || exit 1
-
-ln -s $ACT_HOME/include/eigen3/Eigen $ACT_HOME/include/Eigen
-
+ 
+ ln -s $ACT_HOME/include/eigen3/Eigen $ACT_HOME/include/Eigen

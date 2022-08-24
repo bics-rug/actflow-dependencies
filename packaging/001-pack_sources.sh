@@ -13,13 +13,18 @@
 # limitations under the License.
 #
 
-echo "#############################"
-echo "# pack all sources"
+echo 
+echo "#### package the repository sources ####"
+echo
+
+# packaging and suppling the sources with working build scripts is required by multiple strong copyleft licenses
+# that we need to comply to
+
 if [ -d "../packaging" ]; then echo "please exec from repository root (one folder up)"; exit 1; fi
+
+# save the version number for reference 
 touch "actflow_dependency_build_${CIRCLE_SHA1:0:6}_$(date '+%Y-%m-%d')"
 
-#for directory in $EDA_SRC/*; do rm -rf $directory/.git; done
 tar --exclude-vcs \
--czf actflow_dependencies_sources.tar.gz ./*
+-czf actflow_dependencies_sources_${CIRCLE_SHA1:0:6}_$(date '+%Y-%m-%d').tar.gz ./*
 
-# --exclude="$(realpath --relative-to ./ $EDA_SRCDIR/org-boostorg-boost-prebuild)" \

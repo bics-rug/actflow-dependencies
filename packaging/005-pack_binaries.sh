@@ -19,10 +19,13 @@ then
         exit 1
 fi
 
-echo "#############################"
-echo "# pack all binaries"
+echo 
+echo "#### package the ACT_HOME install ####"
+echo
 if [ -d "../packaging" ]; then echo "please exec from repository root (one folder up)"; exit 1; fi
-cp -R $ACT_HOME act
-mv actflow_dependency_build_* act/
-tar -czf actflow_dependencies.tar.gz act
 
+# move to the folder above act_home so the pathes inside the tar are nice
+WORK_DIR=$(pwd)
+mv actflow_dependency_build_* $ACT_HOME/
+cd $ACT_HOME/..
+tar -czf $WORK_DIR/actflow_dependencies_package_${CIRCLE_SHA1:0:6}_$(date '+%Y-%m-%d').tar.gz $(realpath --relative-to ./ $ACT_HOME)

@@ -11,8 +11,12 @@
 # limitations under the License.
 #
 
+
 lookup_binary () {
-  command -v $1 || (echo "missing $1" && exit 1)
+  if [ x$(command -v $1) = x ]; then
+    echo "missing $1"
+    exit 1
+  fi
   echo "found $1"
   #echo "ldd $(command -v $1)"
   ldd_out=$(ldd $(command -v $1))
@@ -36,3 +40,4 @@ lookup_shared_library () {
   fi
   #echo "Debug: $ldd_out"
 }
+

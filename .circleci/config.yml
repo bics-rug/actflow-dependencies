@@ -37,7 +37,7 @@ jobs:
           root: /
           paths:
             - opt/act
-            - root/project/actflow_dependencies_sources.tar.gz
+            - root/project/actflow_dependencies_sources*.tar.gz
    build-dep2-centos7:
      docker:
      # use an old image for compatibity of binaries
@@ -48,7 +48,7 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf actflow_dependencies_sources.tar.gz
+              tar -xf actflow_dependencies_sources*.tar.gz
               ls -la
        - run:
           name: install build tools
@@ -84,7 +84,10 @@ jobs:
        - persist_to_workspace:
           root: ./
           paths:
-            - actflow_dependencies.tar.gz
+            - actflow_dependencies_package*.tar.gz
+            - packaging/release_description.md
+            - packaging/release_titel.md
+            - README.md
       
        
    # package and upload
@@ -100,9 +103,12 @@ jobs:
             mkdir upload
             mv root/project/*tar.gz upload
             mv *tar.gz upload
+            cp README.md upload/
             go install github.com/tcnksm/ghr@latest
-            VERSION="rowling"
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./upload/
+            RELEASE_VERSION="rowling"
+            RELEASE_TITEL=$(head -n 1 packaging/release_titel.md)
+            RELEASE_BODY=$(head -n 1 packaging/release_description.md)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n ${RELEASE_TITEL} -b ${RELEASE_BODY} -delete ${RELEASE_VERSION} ./upload/
 
    test-centos7:
      docker:
@@ -114,13 +120,14 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
-              tar -xf actflow_dependencies.tar.gz 
-              export ACT_HOME=$(pwd)/act_install
+              mkdir install
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh              
        
@@ -134,13 +141,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -159,13 +166,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -180,13 +187,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -201,13 +208,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -222,13 +229,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -243,13 +250,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -264,13 +271,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -285,13 +292,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -306,13 +313,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -327,13 +334,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -348,13 +355,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      
@@ -369,13 +376,13 @@ jobs:
        - run:
           name: restore src
           command: |
-              tar -xf root/project/actflow_dependencies_sources.tar.gz
+              tar -xf root/project/actflow_dependencies_sources*.tar.gz
               ls -la
        - run: 
           name: test binaries
           command: |
               mkdir install
-              tar -C install -xf actflow_dependencies.tar.gz 
+              tar -C install -xf actflow_dependencies_package*.tar.gz 
               export ACT_HOME=$(pwd)/install/act
               ls -la
               bash packaging/006-test.sh      

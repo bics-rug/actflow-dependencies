@@ -30,7 +30,8 @@ export PATH=$ACT_HOME/bin:${PATH}
 
 #run all avalible test in order
 for test in tests/*test.sh; do
-    echo "###################"
-    echo $test
-    bash $test
+    echo 
+    echo "#### $test ####"
+    echo
+    bash $test || exit 1
 done

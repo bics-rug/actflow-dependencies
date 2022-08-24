@@ -26,15 +26,19 @@ fi
 
 if [ x$BUILD_GUI = x ]
 then
+        echo
 	echo "Building without GUI applications, to enable set BUILD_GUI='true' and have X11 and libGLU istalled"
+        echo
 fi
 
 #run all builds in order
 for build in build_scripts/0*.sh; do
-   echo "###########"
-   echo $build
-   bash $build
+   echo 
+   echo "#### $build ####"
+   echo
+   bash $build || exit 1
 done 
    
-echo "########################################"
+echo 
 echo "build done, for linker test run './test'"
+echo

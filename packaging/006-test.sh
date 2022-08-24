@@ -19,11 +19,18 @@ then
         exit 1
 fi
 
-echo "#############################"
-echo "# test all binaries"
+
+echo 
+echo "#### run all test suits ####"
+echo
 if [ -d "../packaging" ]; then echo "please exec from repository root (one folder up)"; exit 1; fi 
 
+# moving the install to a new path to test the relativ so linking
 mv $ACT_HOME ${ACT_HOME}_test
+ACT_HOME_PREV=$ACT_HOME
 export ACT_HOME=${ACT_HOME}_test
 
-bash test
+bash test || exit 1
+
+# restore previous state
+mv $ACT_HOME $ACT_HOME_PREV

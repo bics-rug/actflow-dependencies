@@ -65,6 +65,9 @@ cmake \
 -D CMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
 -D CMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
 -D CMAKE_INSTALL_PREFIX=$ACT_HOME \
+-D CMAKE_LIBRARY_PATH=$ACT_HOME/lib \
+-D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
+-D EIGEN3_ROOT=$ACT_HOME/include/eigen3 \
 $EDA_SRC/sandia-trilinos-trilinos  || exit 1
 
 #cmake \
