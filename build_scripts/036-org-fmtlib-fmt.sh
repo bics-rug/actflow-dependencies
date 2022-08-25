@@ -16,7 +16,7 @@
 echo "#############################"
 echo "# fmt"
 cd $EDA_SRC/org-fmtlib-fmt
-cp LISENCE.rst $ACT_HOME/license/LICENSE_org-fmtlib-fmt
+cp LICENSE.rst $ACT_HOME/license/LICENSE_org-fmtlib-fmt
 
 if [ ! -d build ]; then
 	mkdir build

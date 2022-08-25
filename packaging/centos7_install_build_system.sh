@@ -2,5 +2,5 @@
 yum install -y centos-release-scl git wget
 yum-config-manager --enable rhel-server-rhscl-7-rpms
 echo "repo setup"
-echo "yum install -y devtoolset-11 m4 autoconf automake bison flex libtool python3 csh patch texinfo | cat" | bash
+echo "yum install -y devtoolset-11 m4 autoconf automake bison flex libtool python3 csh patch texinfo gettext-devel po4a | cat" | bash
 echo "install done"

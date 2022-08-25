@@ -20,7 +20,7 @@ lookup_binary () {
   echo "found $1"
   #echo "ldd $(command -v $1)"
   ldd_out=$(ldd $(command -v $1))
-  if [[ ldd_out == *"not found"* || ldd_out == *"missing"* || ldd_out == *"No such file"* || ldd_out == *"not a dynamic executable"* ]]; then
+  if [[ $ldd_out == *"not found"* || $ldd_out == *"missing"* || $ldd_out == *"No such file"* || $ldd_out == *"not a dynamic executable"* ]]; then
     echo "missing shared library: $ldd_out"
     exit 1
   fi
@@ -34,7 +34,7 @@ lookup_shared_library () {
   fi
   echo "found $1"
   ldd_out=$(ldd $ACT_HOME/lib/$1)
-  if [[ ldd_out == *"not found"* || ldd_out == *"missing"* || ldd_out == *"No such file"* || ldd_out == *"not a dynamic executable"* ]]; then
+  if [[ $ldd_out == *"not found"* || $ldd_out == *"missing"* || $ldd_out == *"No such file"* || $ldd_out == *"not a dynamic executable"* ]]; then
     echo "missing shared library: $ldd_out"
     exit 1
   fi

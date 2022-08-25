@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Copyright 2022 Ole Richter - University of Groningen
@@ -13,25 +13,21 @@
 # limitations under the License.
 #
 
-if [ x$ACT_HOME = x ]
-then
-	echo "Please set the environment variable ACT_HOME to the install directory"
-        exit 1
-fi
-
-if [ x$EDA_SRC = x ]
-then
-	export EDA_SRC=$(pwd)/src
-fi
-
-# make sure $ACT_HOME/bin is highest prio for the tests
-export PATH=$ACT_HOME/bin:${PATH}
-
-
-#run all avalible test in order
-for test in tests/0*test.sh; do
-    echo 
-    echo "#### $test ####"
-    echo
-    bash $test || exit 1
-done
+echo 
+echo "#### liblzma ####"
+echo
+cd $EDA_SRC/org-tukaani-xz
+cp COPYING $ACT_HOME/license/LICENSE_org-tukaani-xz
+cat COPYING.LGPLv2.1 >> $ACT_HOME/license/LICENSE_org-tukaani-xz
+./autogen.sh || exit 1
+./configure --prefix=$ACT_HOME \
+    --disable-xz \
+    --disable-xzdec \
+    --disable-lzmadec \
+    --disable-lzmainfo \
+    --disable-scripts \
+    --disable-doc \
+    CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" \
+    LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+make -j || exit 1
+make install || exit 1

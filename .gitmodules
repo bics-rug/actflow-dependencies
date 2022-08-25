@@ -82,3 +82,12 @@
 	path = src/org-debian-fftw3
 	url = https://salsa.debian.org/science-team/fftw3.git
 	shallow = true
+[submodule "src/org-gnu-gcc"]
+	path = src/org-gnu-gcc
+	url = git://gcc.gnu.org/git/gcc.git
+	shallow = true
+# boost lzma iostream support disabled
+#[submodule "src/org-tukaani-xz"]
+#	path = src/org-tukaani-xz
+#	url = https://git.tukaani.org/xz.git
+	

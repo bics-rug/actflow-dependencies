@@ -13,12 +13,15 @@
 # limitations under the License.
 #
 
-echo "#############################"
-echo "# Boost"
+echo 
+echo "#### Boost ####"
+echo
 cd $EDA_SRC/org-boostorg-boost
 cp LICENSE_1_0.txt $ACT_HOME/license/LICENSE_org-boostorg-boost
 # currently building without MPI (MPICH)
 # echo "using mpi ;" >> user-config.jam
-./bootstrap.sh --prefix=$ACT_HOME --without-libraries=python  || exit 1
+./bootstrap.sh --prefix=$ACT_HOME --without-libraries=python || exit 1
 # echo "using mpi ;" >> project-config.jam
-./b2 -j2 install || exit 1
+echo "## building ##"
+# lzma compression is disabled in iostreams because the ABI symbol patch of lzma is not functioning and was to much work to debug
+./b2 -j2 hardcode-dll-paths=true dll-path="'\$ORIGIN/../lib'" -s NO_LZMA=1 -s NO_BZIP2=1  install || exit 1

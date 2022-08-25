@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Copyright 2022 Ole Richter - University of Groningen
@@ -13,25 +13,12 @@
 # limitations under the License.
 #
 
-if [ x$ACT_HOME = x ]
-then
-	echo "Please set the environment variable ACT_HOME to the install directory"
-        exit 1
-fi
+if [ -d "../tests" ]; then echo "please exec from repository root (one folder up)"; exit 1; fi
+echo "#############################"
+echo "# gcc lib test for linking errors"
 
-if [ x$EDA_SRC = x ]
-then
-	export EDA_SRC=$(pwd)/src
-fi
+source tests/test_helper.sh
 
-# make sure $ACT_HOME/bin is highest prio for the tests
-export PATH=$ACT_HOME/bin:${PATH}
-
-
-#run all avalible test in order
-for test in tests/0*test.sh; do
-    echo 
-    echo "#### $test ####"
-    echo
-    bash $test || exit 1
-done
+lookup_shared_library "libquadmath.so"
+lookup_shared_library "libgfortran.so"
+lookup_shared_library "libgomp.so"
