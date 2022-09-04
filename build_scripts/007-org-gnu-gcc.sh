@@ -22,14 +22,10 @@ cp COPYING.LIB $ACT_HOME/license/LICENSE_org-gnu-gcc-lib
 cat COPYING3.LIB >> $ACT_HOME/license/LICENSE_org-gnu-gcc-lib
 
 # we are bypassing the normal gcc build and just build the libs
-# for gfortran we need to rease the multilib target, set default threading and build libbacktrace + libquatmath
 
-rm -f config-ml.in
-touch config-ml.in
-# libgfortran and libgomp look for it one level higher (as we build them in place which we are not supposed to)
-touch ../config-ml.in
-#cp config-ml.in ../
-#cp symlink-tree ../
+# for gfortran build in place
+cp config-ml.in ../
+
 cd $EDA_SRC/org-gnu-gcc/libgcc
 cp gthr-posix.h gthr-default.h
 
@@ -37,37 +33,43 @@ echo
 echo "#### build libgfortran: libbacktrace ####"
 echo
 
-
 cd $EDA_SRC/org-gnu-gcc/libbacktrace
-./configure --prefix=$ACT_HOME  CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
-make
-make install
+./configure --prefix=$ACT_HOME --with-pic --disable-multilib CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+make || exit 1
+make install || exit 1
 
 echo 
 echo "#### build libgfortran: libquadmath ####"
 echo
 
 cd $EDA_SRC/org-gnu-gcc/libquadmath
-./configure --prefix=$ACT_HOME  CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+if [ ! -d build ]; then
+	mkdir build
+fi
+cd $EDA_SRC/org-gnu-gcc/libquadmath/build
+../configure --prefix=$ACT_HOME --with-pic --disable-multilib CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
 sed -i 's/\/..\/lib64//' Makefile
-make 
-make install
+make  || exit 1
+make install || exit 1
 
 echo 
 echo "#### build gcc libgfortran ####"
 echo
 
 cd $EDA_SRC/org-gnu-gcc/libgfortran
-./configure --prefix=$ACT_HOME  CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+./configure --prefix=$ACT_HOME --with-pic --disable-multilib CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
 sed -i 's/\/..\/lib64//' Makefile
-make 
-make install
+make  || exit 1
+make install || exit 1
 
 echo 
 echo "#### build gcc libgomp ####"
 echo
 cd $EDA_SRC/org-gnu-gcc/libgomp
-./configure --prefix=$ACT_HOME  CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
-echo "#define PIC 1" >> config.h 
-make 
-make install
+if [ ! -d build ]; then
+	mkdir build
+fi
+cd $EDA_SRC/org-gnu-gcc/libgomp/build
+../configure --prefix=$ACT_HOME --with-pic --disable-multilib CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+make  || exit 1
+make install || exit 1
