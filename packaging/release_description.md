@@ -1,1 +1,1 @@
-this latest *rowling* release that includes all dependencies for https://github.com/bics-rug/yale-asyncvlsi-actflow/releases . It is used to build a no depencency installer for ACT that works on most linux OSes 3.10 and newer out of the box. For more info see README.md
+this latest *rowling* release that includes all dependencies for https://github.com/asyncvlsi/yale-asyncvlsi-actflow/releases . It is used to build a no depencency installer for ACT that works on most linux OSes 3.10 and newer out of the box. For more info see README.md
