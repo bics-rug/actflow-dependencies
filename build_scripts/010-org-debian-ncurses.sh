@@ -16,7 +16,7 @@
 echo "#############################"
 echo "# ncurses"
 cd $EDA_SRC/org-debian-ncurses
-./configure --with-shared --without-debug --prefix $ACT_HOME CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+./configure --with-shared --with-termlib --without-debug --prefix $ACT_HOME CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
 make -j || exit 1
 make install || exit 1
 cp COPYING $ACT_HOME/license/LICENSE_ncurses.txt
