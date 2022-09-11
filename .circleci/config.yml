@@ -54,7 +54,6 @@ jobs:
               source packaging/centos7_ci_build_environment.sh
               for build in build_scripts/00*.sh; do echo "#### $build ####"; bash $build || exit 1; done
               for build in build_scripts/01*.sh; do echo "#### $build ####"; bash $build || exit 1; done
-              for build in build_scripts/02*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
           root: /
@@ -84,6 +83,7 @@ jobs:
           name: build part 2
           command: |
               source packaging/centos7_ci_build_environment.sh
+              for build in build_scripts/02*.sh; do echo "#### $build ####"; bash $build || exit 1; done
               for build in build_scripts/03*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
@@ -159,7 +159,7 @@ jobs:
             RELEASE_VERSION="rowling"
             RELEASE_TITEL=$(head -n 1 packaging/release_titel.md)
             RELEASE_BODY=$(head -n 1 packaging/release_description.md)
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
+            ghr -t ${GITHUB_TOKEN} -u ${GITHUB_USER} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
 
    test-centos7:
      docker:
