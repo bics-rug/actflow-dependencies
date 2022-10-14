@@ -21,3 +21,8 @@ source tests/test_helper.sh
 
 lookup_binary "Xyce"
 
+if [ ! -f ${ACT_HOME}/lib/libxycecinterface.a ]; then
+   echo "lib XyceCInterface missing"
+   exit 1
+fi
+

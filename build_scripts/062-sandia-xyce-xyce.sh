@@ -41,7 +41,12 @@ cmake \
 $EDA_SRC/sandia-xyce-xyce  || exit 1
 
 ## -D Xyce_PLUGIN_SUPPORT=ON \
-cmake --build . -j 2 -t install || exit 1
+echo "==== build xyce ===="
+make -j2 || exit 1
+echo "==== build xyce c interface ===="
+make xycecinterface -j || exit 1
+echo "==== install xyce ===="
+make install || exit 1
 
 wget --quiet https://raw.githubusercontent.com/asyncvlsi/actsim/master/grab_xyce.sh
 bash grab_xyce.sh ./  || exit 1
