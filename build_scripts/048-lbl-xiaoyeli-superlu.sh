@@ -14,15 +14,6 @@
 #
 # 
 
-# [submodule "src/lbl-xiaoyeli-superlu_dist"]
-# 	path = src/lbl-xiaoyeli-superlu_dist
-# 	url = ../../xiaoyeli/superlu_dist.git
-# 	shallow = true
-# [submodule "src/lbl-xiaoyeli-superlu"]
-# 	path = src/lbl-xiaoyeli-superlu
-# 	url = ../../xiaoyeli/superlu.git
-# 	shallow = true
-
 
 echo 
 echo "#### superlu ####"

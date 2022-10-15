@@ -94,3 +94,16 @@
 	path = src/org-pmodels-mpich
 	url = ../../pmodels/mpich.git
     shallow = true
+[submodule "src/lbl-xiaoyeli-superlu_dist"]
+	path = src/lbl-xiaoyeli-superlu_dist
+	url = ../../xiaoyeli/superlu_dist.git
+ 	shallow = true
+[submodule "src/lbl-xiaoyeli-superlu"]
+	path = src/lbl-xiaoyeli-superlu
+	url = ../../xiaoyeli/superlu.git
+ 	shallow = true
+[submodule "src/umn-karypislab-parmetis"]
+	path = src/umn-karypislab-parmetis
+	url = ../../karypislab/parmetis.git
+ 	shallow = true
+
