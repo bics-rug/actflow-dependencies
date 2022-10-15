@@ -686,7 +686,7 @@ workflows:
                branches:
                  only:
                    - main
-                   - with-MPI
+                   - main-mpi
               
 
 
