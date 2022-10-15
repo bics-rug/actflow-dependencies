@@ -1,0 +1,13 @@
+--- src/test/MPITest/testBUG967.c	2022-10-15 23:49:20.556000000 +0200
++++ src/test/MPITest/testBUG967.c	2022-10-15 23:48:49.999000000 +0200
+@@ -45,8 +45,8 @@
+   for (i=0; i < nrecvs; i++){
+     MPI_Wait(req + i, &status);
+     procs_from[i] = status.MPI_SOURCE;
+-    printf("%d wait source %d count %lu \n",
+-           my_proc, status.MPI_SOURCE, status._ucount);
++    printf("%d wait source %d count NA \n",
++           my_proc, status.MPI_SOURCE);
+   }
+ 
+   for (i = 0; i < nrecvs; i++)

@@ -215,7 +215,7 @@ jobs:
           root: /
           paths:
             - opt/act
-   # run gui build step 7 and package binaries, use packed source package to resore src
+   # run build step 5, use packed source package to resore src
    build-dep6-centos7:
      docker:
      # use an old image for compatibity of binaries
@@ -241,9 +241,42 @@ jobs:
        - run: 
           name: build part 6
           command: |
-              export BUILD_GUI="true"
               source packaging/centos7_ci_build_environment.sh
               for build in build_scripts/06*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+
+       - persist_to_workspace:
+          root: /
+          paths:
+            - opt/act
+   # run gui build step 7 and package binaries, use packed source package to resore src
+   build-dep7-centos7:
+     docker:
+     # use an old image for compatibity of binaries
+       - image: centos:7.2.1511
+     steps:
+       - attach_workspace:
+          at: /
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_dependencies_sources*.tar.gz
+              ls -la
+       - restore_cache:
+          keys: 
+               - v2-yum-installer-cache
+       - run:
+          name: install build tools
+          command: |
+               set +e
+               date
+               bash packaging/centos7_install_build_system.sh
+               source packaging/centos7_ci_build_environment.sh
+       - run: 
+          name: build part 7
+          command: |
+              export BUILD_GUI="true"
+              source packaging/centos7_ci_build_environment.sh
+              for build in build_scripts/07*.sh; do echo "#### $build ####"; bash $build || exit 1; done
        - run:
           name: install build +gui tools
           command: |
@@ -256,7 +289,7 @@ jobs:
           command: |
               export BUILD_GUI="true"
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/07*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/08*.sh; do echo "#### $build ####"; bash $build || exit 1; done
        - run: 
           name: package
           command: |
@@ -266,8 +299,7 @@ jobs:
           root: ./
           paths:
             - actflow_dependencies_package*.tar.gz
-            - packaging/release_description.md
-            - packaging/release_titel.md
+            - packaging/release_*.md
             - README.md
        
    # package and upload
@@ -285,7 +317,7 @@ jobs:
             mv *tar.gz upload
             cp README.md upload/
             go install github.com/tcnksm/ghr@latest
-            RELEASE_VERSION="rowling"
+            RELEASE_VERSION=$(head -n 1 packaging/release_tag.md)
             RELEASE_TITEL=$(head -n 1 packaging/release_titel.md)
             RELEASE_BODY=$(head -n 1 packaging/release_description.md)
             echo "uploading to: ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
@@ -592,48 +624,51 @@ workflows:
         -  build-dep6-centos7:
              requires:
                - build-dep5-centos7
+        -  build-dep7-centos7:
+             requires:
+               - build-dep6-centos7
         -  test-centos7:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-rhel8:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-debian-stable:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-debian-oldstable:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-debian-oldoldstable:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-ubuntu22:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-ubuntu20:
              requires:
-               - build-dep6-centos7   
+               - build-dep7-centos7   
         -  test-ubuntu18:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  test-ubuntu16:
              requires:
-               - build-dep6-centos7  
+               - build-dep7-centos7  
         -  test-opensuse15:
              requires:
-               - build-dep6-centos7 
+               - build-dep7-centos7 
         -  test-archlinux:
              requires:
-               - build-dep6-centos7 
+               - build-dep7-centos7 
         -  test-fedora-20:
              requires:
-               - build-dep6-centos7 
+               - build-dep7-centos7 
         -  test-fedora-latest:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
         -  upload-github-release:
              requires:
-               - build-dep6-centos7
+               - build-dep7-centos7
                - test-centos7
                - test-rhel8
                - test-debian-stable
@@ -651,6 +686,7 @@ workflows:
                branches:
                  only:
                    - main
+                   - with-MPI
               
 
 

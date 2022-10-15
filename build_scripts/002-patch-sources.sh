@@ -15,11 +15,11 @@
 
 # disabled support for lzma in boost iostreams
 
-#echo "Applying patch to xz library..."
-#if [ ! -f patched_dependencies_v1 ]
-#then
-#   (cd src/org-tukaani-xz; 
-#     patch -p0 < ../../extra/org-tukaani-xz-liblzma-compat-libs.patch;
-#   )
-#   touch patched_dependencies_v1
-#fi
+echo "Applying mpich patch to xyce"
+if [ ! -f patched_dependencies_v1 ]
+then
+   (cd src/sandia-xyce-xyce; 
+     patch -p0 < ../../extra/sandia-xyce-xyce-mpitest-bug967-mpich.patch;
+   )
+   touch patched_dependencies_v1
+fi
