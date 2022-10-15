@@ -112,7 +112,7 @@ jobs:
           command: |
               source packaging/centos7_ci_build_environment.sh
               for build in build_scripts/02*.sh; do echo "#### $build ####"; bash $build || exit 1; done
-              for build in build_scripts/03*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/04*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
           root: /
@@ -145,7 +145,7 @@ jobs:
           name: build part 3
           command: |
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/04*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/05*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
           root: /
@@ -178,7 +178,7 @@ jobs:
           name: build part 4
           command: |
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/05*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/06*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
           root: /
@@ -212,7 +212,7 @@ jobs:
           command: |
               export BUILD_GUI="true"
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/06*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/07*.sh; do echo "#### $build ####"; bash $build || exit 1; done
        - run:
           name: install build +gui tools
           command: |
@@ -225,7 +225,7 @@ jobs:
           command: |
               export BUILD_GUI="true"
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/07*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/08*.sh; do echo "#### $build ####"; bash $build || exit 1; done
        - run: 
           name: package
           command: |
@@ -617,6 +617,7 @@ workflows:
                branches:
                  only:
                    - main
+                   - main-mpi
               
 
 

@@ -58,7 +58,7 @@ cmake \
 -D Trilinos_ENABLE_Zoltan=ON \
 -D Trilinos_ENABLE_OpenMP=ON \
 -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF \
--D Trilinos_ENABLE_CXX11=ON \
+-D CMAKE_CXX_STANDARD=20 \
 -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 -D TPL_ENABLE_AMD=ON \
 -D AMD_LIBRARY_DIRS=$ACT_HOME/lib \
@@ -89,5 +89,5 @@ $EDA_SRC/sandia-trilinos-trilinos  || exit 1
 #-D CMAKE_CXX_COMPILER=mpicxx \
 #-D CMAKE_Fortran_COMPILER=mpifort \
 
-cmake --build . -j2 -t install  || exit 1
+cmake --build . -j3 -t install  || exit 1
 
