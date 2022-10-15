@@ -84,7 +84,7 @@ jobs:
           root: /
           paths:
             - opt/act
-   # run build steps 2 and 3, use packed source package to resore src
+   # run build steps 2, use packed source package to resore src
    build-dep2-centos7:
      docker:
      # use an old image for compatibity of binaries
@@ -108,17 +108,15 @@ jobs:
                bash packaging/centos7_install_build_system.sh
                source packaging/centos7_ci_build_environment.sh
        - run: 
-          name: build part 2
+          name: build part 3
           command: |
               source packaging/centos7_ci_build_environment.sh
               for build in build_scripts/02*.sh; do echo "#### $build ####"; bash $build || exit 1; done
-              for build in build_scripts/03*.sh; do echo "#### $build ####"; bash $build || exit 1; done
-
        - persist_to_workspace:
           root: /
           paths:
             - opt/act
-   # run build step 4, use packed source package to resore src
+   # run build steps 3, use packed source package to resore src
    build-dep3-centos7:
      docker:
      # use an old image for compatibity of binaries
@@ -145,13 +143,13 @@ jobs:
           name: build part 3
           command: |
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/04*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/03*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
           root: /
           paths:
             - opt/act
-   # run build step 5, use packed source package to resore src
+   # run build step 4, use packed source package to resore src
    build-dep4-centos7:
      docker:
      # use an old image for compatibity of binaries
@@ -178,13 +176,13 @@ jobs:
           name: build part 4
           command: |
               source packaging/centos7_ci_build_environment.sh
-              for build in build_scripts/05*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+              for build in build_scripts/04*.sh; do echo "#### $build ####"; bash $build || exit 1; done
 
        - persist_to_workspace:
           root: /
           paths:
             - opt/act
-   # run gui build step 7 and package binaries, use packed source package to resore src
+   # run build step 5, use packed source package to resore src
    build-dep5-centos7:
      docker:
      # use an old image for compatibity of binaries
@@ -210,6 +208,39 @@ jobs:
        - run: 
           name: build part 5
           command: |
+              source packaging/centos7_ci_build_environment.sh
+              for build in build_scripts/05*.sh; do echo "#### $build ####"; bash $build || exit 1; done
+
+       - persist_to_workspace:
+          root: /
+          paths:
+            - opt/act
+   # run gui build step 7 and package binaries, use packed source package to resore src
+   build-dep6-centos7:
+     docker:
+     # use an old image for compatibity of binaries
+       - image: centos:7.2.1511
+     steps:
+       - attach_workspace:
+          at: /
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_dependencies_sources*.tar.gz
+              ls -la
+       - restore_cache:
+          keys: 
+               - v2-yum-installer-cache
+       - run:
+          name: install build tools
+          command: |
+               set +e
+               date
+               bash packaging/centos7_install_build_system.sh
+               source packaging/centos7_ci_build_environment.sh
+       - run: 
+          name: build part 6
+          command: |
               export BUILD_GUI="true"
               source packaging/centos7_ci_build_environment.sh
               for build in build_scripts/06*.sh; do echo "#### $build ####"; bash $build || exit 1; done
@@ -221,7 +252,7 @@ jobs:
                bash packaging/centos7_install_build_system_gui.sh
                source packaging/centos7_ci_build_environment.sh
        - run: 
-          name: build part 6
+          name: build part GUI
           command: |
               export BUILD_GUI="true"
               source packaging/centos7_ci_build_environment.sh
@@ -558,48 +589,51 @@ workflows:
         -  build-dep5-centos7:
              requires:
                - build-dep4-centos7
+        -  build-dep6-centos7:
+             requires:
+               - build-dep5-centos7
         -  test-centos7:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-rhel8:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-debian-stable:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-debian-oldstable:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-debian-oldoldstable:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-ubuntu22:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-ubuntu20:
              requires:
-               - build-dep5-centos7   
+               - build-dep6-centos7   
         -  test-ubuntu18:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  test-ubuntu16:
              requires:
-               - build-dep5-centos7  
+               - build-dep6-centos7  
         -  test-opensuse15:
              requires:
-               - build-dep5-centos7 
+               - build-dep6-centos7 
         -  test-archlinux:
              requires:
-               - build-dep5-centos7 
+               - build-dep6-centos7 
         -  test-fedora-20:
              requires:
-               - build-dep5-centos7 
+               - build-dep6-centos7 
         -  test-fedora-latest:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
         -  upload-github-release:
              requires:
-               - build-dep5-centos7
+               - build-dep6-centos7
                - test-centos7
                - test-rhel8
                - test-debian-stable

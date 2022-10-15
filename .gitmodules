@@ -90,4 +90,7 @@
 #[submodule "src/org-tukaani-xz"]
 #	path = src/org-tukaani-xz
 #	url = https://git.tukaani.org/xz.git
-	
+[submodule "src/org-pmodels-mpich"]
+	path = src/org-pmodels-mpich
+	url = ../../pmodels/mpich.git
+    shallow = true

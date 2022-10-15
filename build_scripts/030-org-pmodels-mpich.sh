@@ -13,19 +13,13 @@
 # limitations under the License.
 #
 
-# currently disabled should be working, is just slow, enable when someone needs it for the first time
-
-#this would need 
-# [submodule "src/org-pmodels-mpich"]
-#	path = src/org-pmodels-mpich
-#	url = ../../pmodels/mpich.git
-
 # => boost
 # => trilinos (xyce => actsim)
 # => galois (backend tools)
 
-echo "#############################"
-echo "# MPICH"
+echo 
+echo "#### MPICH ####"
+echo
 
 cd $EDA_SRC/org-pmodels-mpich
 cp COPYRIGHT $ACT_HOME/license/LICENSE_org-pmodels-mpich
@@ -35,7 +29,11 @@ sed -i 's/ver=2.4.4/ver=2.4.2/' autogen.sh
 sed -i 's/ver=1.15/ver=1.13/' autogen.sh
 
 ./autogen.sh
-./configure --prefix=$ACT_HOME --enable-fast=O3 FFLAGS=-fallow-argument-mismatch FCFLAGS=-fallow-argument-mismatch
-make -j2
-make install
+./configure \
+    --prefix=$ACT_HOME \
+    --enable-fast=O3 \
+    FFLAGS=-fallow-argument-mismatch \
+    FCFLAGS=-fallow-argument-mismatch || exit 1
+make -j2 || exit 1
+make install || exit 1
 

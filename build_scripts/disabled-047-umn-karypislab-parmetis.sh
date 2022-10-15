@@ -14,14 +14,26 @@
 #
 
 echo 
-echo "#### Boost ####"
-echo
-cd $EDA_SRC/org-boostorg-boost
-cp LICENSE_1_0.txt $ACT_HOME/license/LICENSE_org-boostorg-boost
-# currently building without MPI (MPICH)
-echo "using mpi ;" >> user-config.jam
-./bootstrap.sh --prefix=$ACT_HOME --without-libraries=python || exit 1
-echo "using mpi ;" >> project-config.jam
-echo "## building ##"
-# lzma compression is disabled in iostreams because the ABI symbol patch of lzma is not functioning and was to much work to debug
-./b2 -j2 hardcode-dll-paths=true dll-path="'\$ORIGIN/../lib'" -s NO_LZMA=1 -s NO_BZIP2=1  install || exit 1
+echo "#### parmetis ####"
+echo 
+
+cd $EDA_SRC/umn-karypislab-parmetis
+if [ ! -d build ]; then
+	mkdir build
+fi
+cp LICENSE $ACT_HOME/license/LICENSE_umn-karypislab-parmetis
+
+cd $EDA_SRC/umn-karypislab-parmetis/build
+
+cmake \
+-D CMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
+-D CMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
+-D CMAKE_INSTALL_PREFIX=$ACT_HOME \
+-D CMAKE_LIBRARY_PATH=$ACT_HOME/lib \
+-D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
+-D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+-D CMAKE_BUILD_TYPE=Release \
+$EDA_SRC/umn-karypislab-parmetis || exit 1
+
+make -j || exit 1
+make install || exit 1

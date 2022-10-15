@@ -13,8 +13,9 @@
 # limitations under the License.
 #
 
-echo "#############################"
-echo "# trilinos"
+echo 
+echo "#### trilinos ####"
+echo
 
 cd $EDA_SRC/sandia-trilinos-trilinos
 if [ ! -d build ]; then
@@ -27,9 +28,6 @@ cd $EDA_SRC/sandia-trilinos-trilinos/build
 
 cmake \
 -G "Unix Makefiles" \
--D CMAKE_C_COMPILER=gcc \
--D CMAKE_CXX_COMPILER=g++ \
--D CMAKE_Fortran_COMPILER=gfortran \
 -D CMAKE_CXX_FLAGS="-O3 -fPIC" \
 -D CMAKE_C_FLAGS="-O3 -fPIC" \
 -D CMAKE_Fortran_FLAGS="-O3 -fPIC" \
@@ -42,6 +40,7 @@ cmake \
 -D EpetraExt_BUILD_GRAPH_REORDERINGS=ON \
 -D Trilinos_ENABLE_TrilinosCouplings=ON \
 -D Trilinos_ENABLE_Ifpack=ON \
+-D Trilinos_ENABLE_Isorropia=ON \
 -D Trilinos_ENABLE_AztecOO=ON \
 -D Trilinos_ENABLE_Belos=ON \
 -D Trilinos_ENABLE_Teuchos=ON \
@@ -54,6 +53,10 @@ cmake \
 -D Trilinos_ENABLE_Sacado=ON \
 -D Trilinos_ENABLE_Stokhos=ON \
 -D Trilinos_ENABLE_Kokkos=ON \
+-D Trilinos_ENABLE_Zoltan=ON \
+-D Trilinos_ENABLE_OpenMP=ON \
+-D Trilinos_ENABLE_ShyLU=ON \
+-D Trilinos_ENABLE_ShyLU_DDCore=ON \
 -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF \
 -D Trilinos_ENABLE_CXX11=ON \
 -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
@@ -62,6 +65,7 @@ cmake \
 -D TPL_AMD_INCLUDE_DIRS=$ACT_HOME/include \
 -D TPL_ENABLE_BLAS=ON \
 -D TPL_ENABLE_LAPACK=ON \
+-D TPL_ENABLE_MPI=ON \
 -D CMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
 -D CMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
 -D CMAKE_INSTALL_PREFIX=$ACT_HOME \
@@ -69,22 +73,6 @@ cmake \
 -D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
 -D EIGEN3_ROOT=$ACT_HOME/include/eigen3 \
 $EDA_SRC/sandia-trilinos-trilinos  || exit 1
-
-#cmake \
-#-C $EDA_SRC/sandia-xyce-xyce/cmake/trilinos/trilinos-config.cmake \
-#-D CMAKE_INSTALL_PREFIX=$ACT_HOME \
-#-D AMD_LIBRARY_DIRS=$ACT_HOME/lib \
-#-D AMD_INCLUDE_DIRS=$ACT_HOME/include \
-#-D BLAS_LIBRARY_DIRS=$ACT_HOME/lib \
-#-D LAPACK_LIBRARY_DIRS=$ACT_HOME/lib \
-#-D CMAKE_INSTALL_RPATH="\$ORIGIN/../lib,$ACT_HOME/lib" \
-#-D CMAKE_POSITION_INDEPENDENT_CODE=ON \
-#$EDA_SRC/sandia-trilinos-trilinos | exit 1
-
-#-C $EDA_SRC/sandia-xyce-xyce/cmake/trilinos/trilinos-config-MPI.cmake \
-#-D CMAKE_C_COMPILER=mpicc \
-#-D CMAKE_CXX_COMPILER=mpicxx \
-#-D CMAKE_Fortran_COMPILER=mpifort \
 
 cmake --build . -j2 -t install  || exit 1
 
