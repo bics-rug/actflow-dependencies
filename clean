@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# this script cleans everything by hard reset and removing all non tracked files
+
+rm -f patched_dependencies*
+
+for source in $(pwd)/src/*; do
+    if [ -d $source ]; then
+        cd $source
+        git reset --hard
+        git clean -d --force
+    fi
+done
+

@@ -13,8 +13,9 @@
 # limitations under the License.
 #
 
-echo "#############################"
-echo "# trilinos"
+echo 
+echo "#### trilinos ####"
+echo
 
 cd $EDA_SRC/sandia-trilinos-trilinos
 if [ ! -d build ]; then
@@ -73,21 +74,5 @@ cmake \
 -D EIGEN3_ROOT=$ACT_HOME/include/eigen3 \
 $EDA_SRC/sandia-trilinos-trilinos  || exit 1
 
-#cmake \
-#-C $EDA_SRC/sandia-xyce-xyce/cmake/trilinos/trilinos-config.cmake \
-#-D CMAKE_INSTALL_PREFIX=$ACT_HOME \
-#-D AMD_LIBRARY_DIRS=$ACT_HOME/lib \
-#-D AMD_INCLUDE_DIRS=$ACT_HOME/include \
-#-D BLAS_LIBRARY_DIRS=$ACT_HOME/lib \
-#-D LAPACK_LIBRARY_DIRS=$ACT_HOME/lib \
-#-D CMAKE_INSTALL_RPATH="\$ORIGIN/../lib,$ACT_HOME/lib" \
-#-D CMAKE_POSITION_INDEPENDENT_CODE=ON \
-#$EDA_SRC/sandia-trilinos-trilinos | exit 1
-
-#-C $EDA_SRC/sandia-xyce-xyce/cmake/trilinos/trilinos-config-MPI.cmake \
-#-D CMAKE_C_COMPILER=mpicc \
-#-D CMAKE_CXX_COMPILER=mpicxx \
-#-D CMAKE_Fortran_COMPILER=mpifort \
-
-cmake --build . -j3 -t install  || exit 1
+cmake --build . -j2 -t install  || exit 1
 
