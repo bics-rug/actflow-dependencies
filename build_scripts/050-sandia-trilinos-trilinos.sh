@@ -42,6 +42,7 @@ cmake \
 -D EpetraExt_BUILD_GRAPH_REORDERINGS=ON \
 -D Trilinos_ENABLE_TrilinosCouplings=ON \
 -D Trilinos_ENABLE_Ifpack=ON \
+-D Trilinos_ENABLE_Isorropia=ON \
 -D Trilinos_ENABLE_AztecOO=ON \
 -D Trilinos_ENABLE_Belos=ON \
 -D Trilinos_ENABLE_Teuchos=ON \
@@ -54,6 +55,8 @@ cmake \
 -D Trilinos_ENABLE_Sacado=ON \
 -D Trilinos_ENABLE_Stokhos=ON \
 -D Trilinos_ENABLE_Kokkos=ON \
+-D Trilinos_ENABLE_Zoltan=ON \
+-D Trilinos_ENABLE_OpenMP=ON \
 -D Trilinos_ENABLE_ALL_OPTIONAL_PACKAGES=OFF \
 -D Trilinos_ENABLE_CXX11=ON \
 -D CMAKE_POSITION_INDEPENDENT_CODE=ON \

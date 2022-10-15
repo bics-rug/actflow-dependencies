@@ -39,7 +39,7 @@ cp LICENSE $ACT_HOME/license/LICENSE_org-xianyi-openblas
 #sed -i 's/\/lib64/\/lib/g' cmake_install.cmake
 #make -j || exit 1
 #make install  || exit 1
-make -j NUM_THREADS=64 CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
+make -j NUM_THREADS=64 USE_OPENMP=1 CPPFLAGS="-I$ACT_HOME/include ${CPPFLAGS}" LDFLAGS="-L$ACT_HOME/lib ${LDFLAGS} -Wl,-rpath=\\\$\$ORIGIN/../lib,-rpath=$ACT_HOME/lib" || exit 1
 make PREFIX=$ACT_HOME install  || exit 1
 cd $ACT_HOME/lib/
 ln -s libopenblas.so libblas.so
