@@ -106,4 +106,11 @@
 	path = src/umn-karypislab-parmetis
 	url = ../../karypislab/parmetis.git
  	shallow = true
-
+[submodule "src/umn-karypislab-gklib"]
+	path = src/umn-karypislab-gklib
+	url = ../../KarypisLab/GKlib.git
+ 	shallow = true
+[submodule "src/umn-karypislab-metis"]
+	path = src/umn-karypislab-metis
+	url = ../../KarypisLab/METIS.git
+	shallow = true

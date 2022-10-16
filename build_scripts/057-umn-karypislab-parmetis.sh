@@ -14,6 +14,56 @@
 #
 
 echo 
+echo "#### GKlib ####"
+echo 
+
+cd $EDA_SRC/umn-karypislab-gklib
+if [ ! -d build ]; then
+	mkdir build
+fi
+cp LICENSE $ACT_HOME/license/LICENSE_umn-karypislab-gklib
+
+cd $EDA_SRC/umn-karypislab-gklib/build
+
+cmake \
+-D CMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
+-D CMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
+-D CMAKE_INSTALL_PREFIX=$ACT_HOME \
+-D CMAKE_LIBRARY_PATH=$ACT_HOME/lib \
+-D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
+-D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+-D CMAKE_BUILD_TYPE=Release \
+$EDA_SRC/umn-karypislab-gklib || exit 1
+
+make -j || exit 1
+make install || exit 1
+
+echo 
+echo "#### metis ####"
+echo 
+
+cd $EDA_SRC/umn-karypislab-metis
+if [ ! -d build ]; then
+	mkdir build
+fi
+cp LICENSE $ACT_HOME/license/LICENSE_umn-karypislab-metis
+
+cd $EDA_SRC/umn-karypislab-metis/build
+
+cmake \
+-D CMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
+-D CMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' \
+-D CMAKE_INSTALL_PREFIX=$ACT_HOME \
+-D CMAKE_LIBRARY_PATH=$ACT_HOME/lib \
+-D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
+-D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+-D CMAKE_BUILD_TYPE=Release \
+$EDA_SRC/umn-karypislab-metis || exit 1
+
+make -j || exit 1
+make install || exit 1
+
+echo 
 echo "#### parmetis ####"
 echo 
 
