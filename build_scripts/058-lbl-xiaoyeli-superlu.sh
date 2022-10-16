@@ -31,7 +31,7 @@ if [ ! -d build ]; then
 fi
 # license
 
-cp License.txt >> $ACT_HOME/license/LICENSE_lbl-xiaoyeli-superlu_dist
+cp License.txt $ACT_HOME/license/LICENSE_lbl-xiaoyeli-superlu_dist
 cd $EDA_SRC/lbl-xiaoyeli-superlu/build
 
 cmake \
@@ -42,8 +42,7 @@ cmake \
 -D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
 -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 -D CMAKE_BUILD_TYPE=Release \
--D TPL_BLAS_LIBRARIES=${ACT_HOME}/lib/libopenblas.a
--D TPL_ENABLE_INTERNAL_BLASLIB=OFF
+-D TPL_ENABLE_INTERNAL_BLASLIB=OFF \
 $EDA_SRC/lbl-xiaoyeli-superlu || exit 1
 
 make -j || exit 1
@@ -60,9 +59,15 @@ cmake \
 -D CMAKE_INCLUDE_PATH=$ACT_HOME/include \
 -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
 -D CMAKE_BUILD_TYPE=Release \
--D TPL_BLAS_LIBRARIES=${ACT_HOME}/lib/libopenblas.a
--D TPL_ENABLE_INTERNAL_BLASLIB=OFF
--D TPL_ENABLE_LAPACKLIB=ON
+-D XSDK_INDEX_SIZE=64 \
+-D TPL_ENABLE_INTERNAL_BLASLIB=OFF \
+-D TPL_ENABLE_LAPACKLIB=ON \
+-D XSDK_ENABLE_Fortran=ON \
+-D CMAKE_C_COMPILER=mpicc \
+-D CMAKE_CXX_COMPILER=mpic++ \
+-D CMAKE_Fortran_COMPILER=mpif90 \
+-D TPL_PARMETIS_LIBRARIES="${ACT_HOME}/lib/libparmetis.a;${ACT_HOME}/lib/libmetis.a;${ACT_HOME}/lib/libGKlib.a"  \
+-D TPL_PARMETIS_INCLUDE_DIRS=${ACT_HOME}/include \
 $EDA_SRC/lbl-xiaoyeli-superlu_dist  || exit 1
 
 make -j || exit 1

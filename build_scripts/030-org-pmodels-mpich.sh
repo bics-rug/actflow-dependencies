@@ -32,6 +32,9 @@ sed -i 's/ver=1.15/ver=1.13/' autogen.sh
 ./configure \
     --prefix=$ACT_HOME \
     --enable-fast=O3 \
+    --enable-fortran=all \
+    --enable-cxx \
+    --enable-threads=runtime \
     FFLAGS=-fallow-argument-mismatch \
     FCFLAGS=-fallow-argument-mismatch || exit 1
 make -j2 || exit 1
