@@ -31,6 +31,15 @@ then
         echo
 fi
 
+if [ -f patched_dependencies* ]
+then
+        echo
+        echo "you are not in a clean repository state, build will fail, please run ./clean"
+        echo "or excecute the specific build script out of build_scripts that you want to rebuid"
+        echo
+        exit 1
+fi
+
 #run all builds in order
 for build in build_scripts/0*.sh; do
    echo 

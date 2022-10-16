@@ -1,7 +1,13 @@
 # actflow-dependencies
-build all dependencies required by actflow https://github.com/asyncvlsi/actflow
+all dependencies required by actflow https://github.com/asyncvlsi/actflow
+
+Two versions are published as releases, one standard one from branch **main** tagged with **rowling** and one with MPI enabled from branch  **main-mpi** tagged with **rowling-mpi**.
+
+Normal (main):
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow-dependencies/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow-dependencies/tree/main)
 
+MPI enabled (main-mpi):
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow-dependencies/tree/main-mpi.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow-dependencies/tree/main-mpi)
 
 # How to Package and build 
 
@@ -44,4 +50,8 @@ the scripts in packaging actually run the top level sripts for you
 - `build_scripts` contains all the build scripts for the dependencies
 
 # CI
-[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/asyncvlsi/actflow-dependencies/main/build/badge.svg?window=60d)](https://app.circleci.com/insights/github/asyncvlsi/actflow-dependencies/workflows/build/overview?branch=main&reporting-window=last-60-days&insights-snapshot=true)
+## normal
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/asyncvlsi/actflow-dependencies/main/build/badge.svg?window=90d)](https://app.circleci.com/insights/github/asyncvlsi/actflow-dependencies/workflows/build/overview?branch=main&reporting-window=last-90-days&insights-snapshot=true)
+
+## MPI enabled
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/asyncvlsi/actflow-dependencies/main-mpi/build/badge.svg?window=90d)](https://app.circleci.com/insights/github/asyncvlsi/actflow-dependencies/workflows/build/overview?branch=main-mpi&reporting-window=last-90-days&insights-snapshot=true)

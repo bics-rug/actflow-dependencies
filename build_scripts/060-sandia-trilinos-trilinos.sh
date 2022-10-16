@@ -28,9 +28,9 @@ cd $EDA_SRC/sandia-trilinos-trilinos/build
 
 cmake \
 -G "Unix Makefiles" \
--D CMAKE_CXX_FLAGS="-O3 -fPIC" \
--D CMAKE_C_FLAGS="-O3 -fPIC" \
--D CMAKE_Fortran_FLAGS="-O3 -fPIC" \
+-D CMAKE_CXX_FLAGS="-O2 -fPIC" \
+-D CMAKE_C_FLAGS="-O2 -fPIC" \
+-D CMAKE_Fortran_FLAGS="-O2 -fPIC" \
 -D CMAKE_MAKE_PROGRAM="make" \
 -D Trilinos_ENABLE_NOX=ON \
 -D NOX_ENABLE_LOCA=ON \
@@ -78,5 +78,5 @@ cmake \
 -D EIGEN3_ROOT=$ACT_HOME/include/eigen3 \
 $EDA_SRC/sandia-trilinos-trilinos  || exit 1
 
-cmake --build . -j3 -t install  || exit 1
+cmake --build . -j2 -t install  || exit 1
 
